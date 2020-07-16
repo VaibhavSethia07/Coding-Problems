@@ -59,6 +59,7 @@ Both second and third level have 2 nodes and hence max width is 2.
 ############################################################################Solution#############################################################################################
 */
 
+//Iterative Solution
 class Tree
 {
     // /* Function to get the maximum width of a binary tree*/
@@ -85,4 +86,28 @@ class Tree
         }
         return res;
     }		
+}
+
+// Recursive Solution
+class Tree
+{
+    // /* Function to get the maximum width of a binary tree*/
+    int getMaxWidth(Node root)
+    {
+        Integer widths[] = new Integer[100000];
+        Arrays.fill(widths,0);
+        getLevelWidth(root,0,widths);
+        Arrays.sort(widths,Collections.reverseOrder());
+        
+        return widths[0];
+    }	
+    
+    static void getLevelWidth(Node root,int level,Integer[] widths){
+        if(root == null)
+            return;
+            
+        widths[level]++;
+        getLevelWidth(root.left,level+1,widths);
+        getLevelWidth(root.right,level+1,widths);
+    }
 }
