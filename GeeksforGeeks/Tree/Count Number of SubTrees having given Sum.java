@@ -56,6 +56,7 @@ Testcase 2: No subtree has sum equal to 5.
 #####################################################################################Solution####################################################################################
 */
 
+// Method 1
 class Tree
 {
     int countSubtreesWithSumX(Node root, int X)
@@ -82,4 +83,30 @@ class Tree
 
 class Counter{
     int count;
+}
+
+// Method 2
+class Tree
+{   int count = 0;
+    boolean flag = true;
+    Node ptr;
+    int countSubtreesWithSumX(Node root, int X)
+    {
+        if(root==null)
+            return 0;
+        if(flag){
+            ptr = root;
+            flag=false;
+        }
+        int leftSum = countSubtreesWithSumX(root.left,X);
+        int rightSum = countSubtreesWithSumX(root.right,X);
+        int sum = leftSum+rightSum+root.data;
+        
+        if(sum==X)
+            count++;
+        if(ptr != root){
+            return sum;
+        }
+        return count;
+    }
 }
