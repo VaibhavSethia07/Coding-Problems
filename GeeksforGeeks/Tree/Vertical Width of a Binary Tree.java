@@ -46,6 +46,7 @@ Testcase 2: According to the explanation given in the above figure , for the giv
 ################################################################################Solution#########################################################################################
 */
 
+// Method 1
 class Tree
 {
     
@@ -63,5 +64,30 @@ class Tree
 	    hs.add(distance);
 	    verticalDistance(root.left,distance-1,hs);
 	    verticalDistance(root.right,distance+1,hs);
+	}
+}
+
+// Method 2
+class Tree
+{   static int min = 0;
+    static int max = 0;
+    
+    public static int verticalWidth(Node root)
+	{   if(root == null)
+	        return 0;
+	    min = 0;
+        max = 0;
+	    vertical(root,0);
+	    return Math.abs(min)+max+1;
+	}
+	
+	static void vertical(Node root,int distance){
+	    if(root==null) return;
+	    
+	    min = Math.min(distance,min);
+	    max = Math.max(distance,max);
+	    
+	    vertical(root.left,distance-1);
+	    vertical(root.right,distance+1);
 	}
 }
