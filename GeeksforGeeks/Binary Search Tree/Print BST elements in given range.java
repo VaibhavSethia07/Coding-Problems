@@ -53,6 +53,7 @@ Testcase 2: For the given input , elements which lies in the range of 13 and 23 
 #####################################################################################Solution####################################################################################
 */
 
+// Naive Solution
 class Solution
 {   
 	public static ArrayList<Integer> printNearNodes(Node root, int low, int high)
@@ -74,4 +75,31 @@ class Solution
             res.add(root.data);
         nearNodesUtil(root.right,res,low,high);
     }
+}
+
+
+// Efficient Solution
+class Solution
+{   
+	public static ArrayList<Integer> printNearNodes(Node root, int low, int high)
+	{
+	    ArrayList<Integer> res = new ArrayList<>();
+	    nearNodesUtil(root,res,low,high);
+	    
+	    return res;
+    }
+    
+    static void nearNodesUtil(Node root,ArrayList<Integer> res,int low,int high){
+        if(root == null)
+            return;
+        
+        if(root.data>=low)
+            nearNodesUtil(root.left,res,low,high);
+        
+        if(root.data>=low && root.data<=high)
+            res.add(root.data);
+        
+        if(root.data<=high)
+            nearNodesUtil(root.right,res,low,high);
+    } 
 }
