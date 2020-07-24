@@ -47,6 +47,7 @@ Testcase 2: No smaller element exits
 ###########################################################################################Solution##############################################################################
 */
 
+// Iterative Solution
 class Sol
 {
     int floor(Node root, int key) 
@@ -64,4 +65,26 @@ class Sol
         }
         return res;
     } 
+}
+
+// Recursive Soltion
+class Sol
+{
+    int floor(Node root, int key) 
+    { 
+        if(root == null)
+            return -1;
+            
+        if(root.data == key)
+            return root.data;
+        else if(root.data>key)
+            return floor(root.left,key);
+        else{
+            int potFloor = floor(root.right,key);
+            if(potFloor == -1)
+                return root.data;
+            return potFloor;
+        }
+    } 
+ 
 }
