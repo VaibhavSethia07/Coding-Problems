@@ -47,6 +47,7 @@ K=9. The node that has value nearest to K is 9. so the answer is 0.
 ##################################################################################Solution#######################################################################################
 */
 
+// Naive Method
 class Solution
 {   
     // Return the minimum absolute difference between any tree node and the integer K
@@ -79,4 +80,26 @@ class Solution
 class Closest{
     int floor;
     int ceil;
+}
+
+// Efficient Method
+class Solution
+{
+    // Return the minimum absolute difference between any tree node and the integer K
+    static int maxDiff(Node  root, int K) 
+    { 
+        if(root == null)
+            return K;
+            
+        if(root.data == K)
+            return 0;
+            
+        int diff = Math.abs(root.data - K);
+        if(K>root.data)
+            return Math.min(diff,maxDiff(root.right,K));
+        else if(K<root.data)
+            return Math.min(diff,maxDiff(root.left,K));
+        
+        return diff;
+    } 
 }
