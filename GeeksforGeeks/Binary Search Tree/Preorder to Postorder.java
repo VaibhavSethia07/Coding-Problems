@@ -107,3 +107,27 @@ public static Node constructing(HashMap<Integer,Integer> hs,int pre[],int start,
     
     return root;
 }
+
+// Best Solution
+static int preIndex;
+public static Node constructTree(int pre[], int size) {
+    preIndex = 0;
+    return constructing(pre,Integer.MIN_VALUE,Integer.MAX_VALUE);
+}
+
+public static Node constructing(int pre[],int min,int max){
+    if(min>max || preIndex>=pre.length)
+        return null;
+        
+    Node root = null;
+    if(pre[preIndex]>=min && pre[preIndex]<max)
+        root = new Node(pre[preIndex++]);
+    else
+        return null;
+    
+    root.left = constructing(pre,min,root.data);
+    root.right = constructing(pre,root.data,max);
+    
+    return root;
+}
+
