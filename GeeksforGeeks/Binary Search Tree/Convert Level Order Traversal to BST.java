@@ -36,6 +36,7 @@ Testcase 2: After constructing BST, the preorder traversal of BST is 1 3 4 6 7 8
 ####################################################################################Solution#####################################################################################
 */
 
+// Naive Method
 class GFG {
     
     public Node constructBST(int[] arr){
@@ -57,5 +58,52 @@ class GFG {
             root.right = insert(root.right,x);
             
         return root;
+    }
+}
+
+// Efficient Method
+class GFG {
+    
+    public Node constructBST(int[] arr){
+        int N = arr.length;
+        
+        if(N==0)
+            return null;
+            
+        Queue<Range> q = new LinkedList<>();
+        Range root = new Range(arr[0]);
+        q.add(root);
+        int i=1;
+        while(!q.isEmpty()){
+            Range curr = q.poll();
+            
+            if(i<N && arr[i]>curr.min && arr[i]<curr.data){
+                Range currLeft = new Range(arr[i]);
+                curr.left = currLeft;
+                currLeft.min = curr.min;
+                currLeft.max = curr.data;
+                q.add(currLeft);
+                i++;
+            }
+            
+            if(i<N && arr[i]>curr.data && arr[i]<curr.max){
+                Range currRight = new Range(arr[i]);
+                curr.right = currRight;
+                currRight.min = curr.data;
+                currRight.max = curr.max;
+                q.add(currRight);
+                i++;
+            }
+        }
+        
+        return (Node)root;
+    }
+}
+
+class Range extends Node{
+    int min = Integer.MIN_VALUE;
+    int max = Integer.MAX_VALUE;
+    Range(int x){
+        super(x);
     }
 }
