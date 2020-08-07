@@ -40,6 +40,7 @@ From graph it is clear that it contains cycle.
 #########################################################################################Solution################################################################################
 */
 
+// Solution 1 (Topological Sort using BFS)
 class DetectCycle
 {
     static boolean isCyclic(ArrayList<ArrayList<Integer>> adj, int V)
@@ -69,6 +70,38 @@ class DetectCycle
         
         return count != V;
             
+    }
+}
+
+// Solution 2 (Using DFS)
+class DetectCycle
+{
+    static boolean isCyclic(ArrayList<ArrayList<Integer>> adj, int V)
+    {
+        boolean[] recSt = new boolean[V];
+        boolean[] visited = new boolean[V];
+        
+        for(int i=0;i<V;i++)
+            if(!visited[i]){
+                if(findCycle(adj,i,recSt,visited))
+                    return true;
+            }
+        return false;
+    }
+    
+    static boolean findCycle(ArrayList<ArrayList<Integer>> adj,int u,boolean recSt[],boolean visited[]){
+        visited[u] = true;
+        recSt[u] = true;
+        
+        for(int v : adj.get(u)){
+            if(!visited[v] && findCycle(adj,v,recSt,visited))
+                return true;
+            else if(recSt[v])
+                return true;
+        }
+        
+        recSt[u] = false;
+        return false;
     }
 }
 
