@@ -1,0 +1,93 @@
+/*
+Given an unweighted directed graph. Find the members of strongly connected components in the graph
+Note: The Graph can have loops.
+
+Input:
+The first line of the input contains 'T' denoting the number of test cases. For each test case, there will be two lines of input, the first line of each test case consists of two integers V and E, denoting the number of vertices and edges respectively. Then next line contains 2E integers, where pair of integers (u and v) representing an edge from u to v. (0 based indexing is used).
+
+Output:
+For each test case in a new line print, the Strongly connected component of a graph where each member of a strongly connected component is separated by a comma (",") and each strongly connected components is separated by a new line. If there are many such options then print the output that will be provided by the standard implementation of the Tarjan's algorithm (remember zero-based indexing).
+
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function find() which takes the adjacency list of the Graph and the number of vertices N as inputs and prints the different strongly connected components in the graph in a space separated manner. All the conncted components are separated from each other by a comma.
+
+Expected Time Complexity: O(V + E).
+Expected Auxiliary Space: O(V).
+
+Constraints:
+1 <= T <= 10
+1 <= V <= 100000
+1 <= E <= 100000
+0 <= u, v <= N-1
+
+Example:
+Input:
+2
+3 3
+1 2 2 0 2 2
+4 3
+1 2 2 3 3 1 
+
+Output:
+0,2,1,
+0,3 2 1,
+
+Explanation:
+
+Testcase 2:
+
+given no of vertex :4  --> 0,1,2,3
+
+edges are 1-->2, 2-->3, 3-->1,
+
+There is a connected subgraph that includes 1-2-3 which satisfy the condition of strongly connecting components i.e each node is reachable from every other nodes.
+Another subgraph includes individual nodes 0. 
+
+###########################################################################################Solution##############################################################################
+*/
+
+class Solution
+{
+    // adj : adjacency list of the graph
+    // N : Number of vertices
+    static int time;
+    public void find(ArrayList<ArrayList<Integer>> adj, int N)
+    {
+        int low[] = new int[N];
+        int disc[] = new int[N];
+        boolean visited[] = new boolean[N];
+        time=1;
+        Stack<Integer> st = new Stack<>();
+        
+        for(int i=0;i<N;i++)
+            if(!visited[i]){
+                tarjansAlgo(adj,i,low,disc,visited,st);
+                // System.out.print(",");
+            }
+    }
+    
+    void tarjansAlgo(ArrayList<ArrayList<Integer>> adj,int u,int[]low,int[]disc,boolean[]visited,Stack<Integer>st){
+        visited[u]=true;
+        low[u]=disc[u]=time++;
+        st.push(u);
+        
+        for(int v : adj.get(u)){
+            if(!visited[v]){
+                tarjansAlgo(adj,v,low,disc,visited,st);
+                low[u] = Math.min(low[u],low[v]);
+            }
+            else if(st.contains(v))
+                low[u] = Math.min(low[u],disc[v]);
+        }
+        
+        if(low[u]==disc[u]){
+            while(st.contains(u)){
+                if(st.peek()==u)
+                    System.out.print(st.pop()+",");
+                else
+                    System.out.print(st.pop()+" ");
+            }
+        }
+        
+    }
+}
