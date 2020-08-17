@@ -28,7 +28,7 @@ Expected Auxilliary Space : O(1)
 ##############################################################################Solution#############################################################################################
 */
 
-// Solution 1
+// Naive Method
 class Solution
 {
     // Function to return Largest Number
@@ -55,5 +55,30 @@ class Solution
             res.append(solve[j]);
             
         return res.toString();
+    }
+}
+
+// Efficient Method
+class Solution
+{
+    // Function to return Largest Number
+    static String largestNumber(int n, int sum)
+    {
+        if(sum>9*n)
+            return "-1";
+            
+        String str = "";
+        
+        while(sum>9){
+            str+="9";
+            sum-=9;
+        }
+        
+        str+=sum;
+        
+        while(str.length()<n)
+            str+="0";
+            
+        return str;
     }
 }
