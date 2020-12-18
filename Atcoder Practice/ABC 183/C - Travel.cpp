@@ -259,3 +259,84 @@ int main(){
 	
 	return 0;	
 }
+
+// Editorial Solution Using next_permutation function
+
+// Problem: C - Travel
+// Contest: AtCoder - AtCoder Beginner Contest 183
+// URL: https://atcoder.jp/contests/abc183/tasks/abc183_c
+// Memory Limit: 1024 MB
+// Time Limit: 2000 ms
+// Powered by CP Editor (https://github.com/cpeditor/cpeditor)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+using ld = long double;
+using db = double;
+using str = string;
+
+using pi = pair<int,int>;
+using pl = pair<ll,ll>;
+using pd = pair<db,db>;
+
+using vi = vector<int>;
+using vl = vector<ll>;
+
+#define mp make_pair
+#define f first
+#define s second
+
+#define sz(x) (int)(x).size()
+#define all(x) begin(x), end(x)
+#define rsz resize
+#define ins insert
+#define ft front()
+#define bk back()
+#define pf push_front
+#define pb push_back
+
+#define FOR(i,a,b) for (int i = (a); i<(b); ++i)
+#define F0R(i,a) FOR(i,0,a)
+#define ROF(i,a,b) for(int i = (b)-1; i>=(a); --i)
+#define R0F(i,a) ROF(i,0,a)
+#define trav(a,x) for (auto& a: x)
+
+int main(){
+	int N;long K;
+	cin>>N>>K;
+	int* mat[N+1];
+	if(N==1){
+		cout<<0<<"\n";
+		return 0;
+	}
+	
+	for(int i=0;i<=N;i++){
+		mat[i] = new int[N+1];
+	}
+	
+	for(int i=1;i<=N;i++){
+		for(int j=1;j<=N;j++){
+			cin>>mat[i][j];
+		}
+	}
+
+	vector<int> cities(N+1);
+	for(int i=0;i<(int)cities.size()-1;i++){
+		cities[i]=i+1;
+	}
+	cities[N]=1;
+	long ans=0;
+	do{
+		long time=0;
+		for(int i=1;i<(int)cities.size();i++){
+			time+=mat[cities[i-1]][cities[i]];
+		}
+		if(time==K)
+			ans++;
+	}while(next_permutation(cities.begin()+1,cities.end()-1));
+	cout<<ans<<"\n";
+	return 0;	
+}
+
