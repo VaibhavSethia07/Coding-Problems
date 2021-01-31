@@ -165,5 +165,31 @@ int main(){
 	else
 		cout<<ans<<"\n";
 	
+	/* Editorial Solution */
+	long ans=LONG_MAX;
+	for(int i=1;i<(1<<N);i++){
+		long arr[M+1]={0};
+		long cost=0;
+		for(int j=0;j<N;j++){
+			if(i&(1<<j)){
+				cost+=mat[j][0];
+				for(int k=1;k<=M;k++){
+					arr[k]+=mat[j][k];
+				}
+			}
+		}
+		bool ok=true;
+		for(int k=1;k<=M;k++){
+			ok&=(arr[k]>=X);
+		}
+		if(ok)
+			ans=min(ans,cost);
+	}
+	
+	if(ans==LONG_MAX)
+		cout<<-1<<"\n";
+	else
+		cout<<ans<<"\n";
+	
 	return 0;	
 }
