@@ -1,0 +1,190 @@
+// Problem: Energy Stones
+// Contest: Google Coding Competitions - Round B 2019 - Kick Start 2019
+// URL: https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050eda/00000000001198c3
+// Memory Limit: 1024 MB
+// Time Limit: 30000 ms
+
+#include <bits/stdc++.h>
+using namespace std;
+
+using l = long;
+using ll = long long;
+using ld = long double;
+using db = double;
+using str = string;
+
+using pi = pair<int,int>;
+using pl = pair<ll,ll>;
+using pd = pair<db,db>;
+
+using vi = vector<int>;
+using vl = vector<long>;
+using vll = vector<ll>;
+
+#define mp make_pair
+#define f first
+#define s second
+
+#define sz(x) (int)(x).size()
+#define all(x) begin(x), end(x)
+#define rsz resize
+#define ins insert
+#define ft front()
+#define bk back()
+#define pf push_front
+#define pb push_back
+#define modinv(a,m) modEx(a,m-2,m)
+#define moddiv(a,b,m) (a*modinv(b,m))%m
+const ll mod=1e9+7;
+
+/* These template codes have been taken from cp-algorithms */
+ll extEuclid(ll a,ll b,ll& x,ll& y){
+	if(b==0){
+		x=1;
+		y=0;
+		return a;
+	}
+	
+	ll x1,y1;
+	ll d=extEuclid(b,a%b,x1,y1);
+	x=y1;
+	y=x1-(a/b)*y1;
+	return d;
+}
+
+ll modInverse(ll a,ll n){
+	ll x,y;
+	extEuclid(a,n,x,y);
+	return x;
+}
+
+ll linearCong(ll a,ll b,ll n){
+	ll d=__gcd(a,n);
+	
+	if(b%d)
+		return -1;
+	a/=d;b/=d;n/=d;
+	ll a_inv=modInverse(a,n);
+	ll ans=(b*a_inv)%n;
+	if(ans<0)
+		ans+=n;
+	return ans;
+}
+
+void divisors(map<int,int>& d,ll N){
+	for(int div : {2,3,5}){
+		int cnt=0;
+		if(N%div==0){
+			while((N%div)==0){
+				N/=div;
+				cnt++;
+			}
+			d[div]=cnt;
+		}
+	}
+	static array<int,8> increments = {4,2,4,2,4,6,2,6};
+	int i=0;
+	for(ll div=7;div*div<=N;div+=increments[i++]){
+		if((N%div)==0){
+			int cnt=0;
+			while((N%div)==0){
+				N/=div;
+				cnt++;
+			}
+			d[div]=cnt;
+		}
+		if(i==8)
+			i=0;
+	}
+	if(N>1)
+		d[N]=1;
+}
+
+/* Print the string of digits without leading zero */
+void norm(string& str){
+	bool zero=true;
+	
+	for(auto& c:str){
+		if(c!='0')
+			zero=false;
+		if(c!='0' || !zero)
+			cout<<c;
+	}
+}
+
+class Stone {        
+  public:         
+    long time;
+    long energy;
+    long loss;
+};
+
+bool cmp(const Stone& s1,const Stone& s2){
+	if(s1.time*s2.loss==s2.time*s1.loss)
+		return s1.energy>s2.energy;
+	return s1.time*s2.loss<s2.time*s1.loss;
+}
+
+void input(vector<Stone>& v,int N){
+	for(int i=0;i<N;i++){
+		Stone stone;
+		cin>>stone.time>>stone.energy>>stone.loss;
+		v[i]=stone;
+	}
+}
+
+long dp[100][10005];
+long solve(int i,int N,vector<Stone>& v,long tim){
+	if(i==N)
+		return 0;
+	if(dp[i][tim]!=-1)
+		return dp[i][tim];	
+	
+	long sol1=solve(i+1,N,v,tim);
+	long sol2=v[i].energy-v[i].loss*tim+solve(i+1,N,v,tim+v[i].time);
+	
+	return dp[i][tim]=max(sol1,sol2);
+}
+
+
+int main(){
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T,N;
+	cin>>T;
+	for(int t=1;t<=T;t++){
+		cin>>N;
+		vector<Stone> v(N);
+		input(v,N);
+		sort(begin(v),end(v),cmp);
+		// memset(dp,-1,sizeof(dp));
+		
+		for(int i=1;i<=N;i++)
+			dp[i][0]=dp[i-1][0]+v[i-1].energy;
+		
+		for(int i=1;i<=N;i++){
+			for(int j=1;j<2000;j++){
+				dp[i][j]=dp[i-1][j];
+				if((j-v[i-1].time)>=0 && v[i-1].energy-v[i-1].loss*j+dp[i-1][j-v[i-1].time]>=0){
+					// cout<<v[i-1].time<<"\n";
+					dp[i][j]=max(dp[i][j],v[i-1].energy-v[i-1].loss*j+dp[i-1][j-v[i-1].time]);
+				}
+			}
+		}
+		long mx=0;
+		for(int i=1;i<10005;i++)
+			mx=max(dp[N][i],mx);
+			
+		for(int i=0;i<=N;i++){
+			for(int j=0;j<2000;j++)
+				cout<<dp[i][j]<<" ";
+			cout<<"\n";
+		}
+			
+		cout<<mx<<"\n";
+		// cout<<"Case #"<<t<<": "<<solve(0,N,v,0)<<"\n";
+	}
+	
+	return 0;	
+}
