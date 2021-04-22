@@ -128,7 +128,8 @@ void solve(long t,long a,long b,long x=0){
 		cache.insert(w);
 	}
 }
-
+const int MAXN=5e6+5;
+bool dp[2][MAXN];
 int main(){
 	ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -155,6 +156,33 @@ int main(){
 		solve(y,a,b,x/2);
 	}
 	
+	cout<<mx<<"\n";
+	
+	/* Editorial Solution */
+	dp[0][0]=1;
+	dp[1][0]=1;
+	for(int choice=0;choice<2;choice++){
+		for(int i=0;i<=t;i++){
+			if(!dp[choice][i])
+				continue;
+			
+			if(i+a<=t)
+				dp[choice][i+a]=1;
+			
+			if(i+b<=t)
+				dp[choice][i+b]=1;
+				
+			if(choice==0)
+				dp[choice+1][i/2]=1;
+		}
+	}
+	
+	long mx=0;
+	for(int i=t;i>=0;i--)
+		if(dp[0][i] || dp[1][i]){
+			mx=i;
+			break;
+		}
 	cout<<mx<<"\n";
 	return 0;	
 }
