@@ -1,0 +1,197 @@
+// Problem: Robot Programming Strategy
+// Contest: Google Coding Competitions - Round 1C 2019 - Code Jam 2019
+// URL: https://codingcompetitions.withgoogle.com/codejam/round/00000000000516b9/0000000000134c90
+// Memory Limit: 1024 MB
+// Time Limit: 20000 ms
+
+#include <bits/stdc++.h>
+using namespace std;
+
+using l = long;
+using ll = long long;
+using ld = long double;
+using db = double;
+using str = string;
+
+using pi = pair<int,int>;
+using pl = pair<ll,ll>;
+using pd = pair<db,db>;
+
+using vi = vector<int>;
+using vl = vector<long>;
+using vll = vector<ll>;
+
+#define mp make_pair
+#define f first
+#define s second
+
+#define sz(x) (int)(x).size()
+#define all(x) begin(x), end(x)
+#define rsz resize
+#define ins insert
+#define ft front()
+#define bk back()
+#define pf push_front
+#define pb push_back
+#define modinv(a,m) modEx(a,m-2,m)
+#define moddiv(a,b,m) (a*modinv(b,m))%m
+const ll mod=1e9+7;
+
+/* These template codes have been taken from cp-algorithms */
+ll extEuclid(ll a,ll b,ll& x,ll& y){
+	if(b==0){
+		x=1;
+		y=0;
+		return a;
+	}
+	
+	ll x1,y1;
+	ll d=extEuclid(b,a%b,x1,y1);
+	x=y1;
+	y=x1-(a/b)*y1;
+	return d;
+}
+
+ll modInverse(ll a,ll n){
+	ll x,y;
+	extEuclid(a,n,x,y);
+	return x;
+}
+
+ll linearCong(ll a,ll b,ll n){
+	ll d=__gcd(a,n);
+	
+	if(b%d)
+		return -1;
+	a/=d;b/=d;n/=d;
+	ll a_inv=modInverse(a,n);
+	ll ans=(b*a_inv)%n;
+	if(ans<0)
+		ans+=n;
+	return ans;
+}
+
+void divisors(map<int,int>& d,ll N){
+	for(int div : {2,3,5}){
+		int cnt=0;
+		if(N%div==0){
+			while((N%div)==0){
+				N/=div;
+				cnt++;
+			}
+			d[div]=cnt;
+		}
+	}
+	static array<int,8> increments = {4,2,4,2,4,6,2,6};
+	int i=0;
+	for(ll div=7;div*div<=N;div+=increments[i++]){
+		if((N%div)==0){
+			int cnt=0;
+			while((N%div)==0){
+				N/=div;
+				cnt++;
+			}
+			d[div]=cnt;
+		}
+		if(i==8)
+			i=0;
+	}
+	if(N>1)
+		d[N]=1;
+}
+
+/* Print the string of digits without leading zero */
+void norm(string& str){
+	bool zero=true;
+	
+	for(auto& c:str){
+		if(c!='0')
+			zero=false;
+		if(c!='0' || !zero)
+			cout<<c;
+	}
+}
+
+void input(vl& v,int N){
+	for(int i=0;i<N;i++){
+		cin>>v[i];
+	}
+}
+
+string ans;
+bool solve(int A){
+	vector<string> v(A);
+	ans="";
+	int mx=0;
+	for(int i=0;i<A;i++){
+		cin>>v[i];
+		mx=max(mx,(int)v[i].length());
+	}
+	
+	bool defeat[A]={0};
+	bool accept=1;
+	for(int i=0;;i++){
+		int mask=0;
+		for(int j=0;j<A;j++){
+			if(defeat[j])
+				continue;
+			int N=(int)v[j].length();
+			char ch=v[j][i%N];
+			switch(ch){
+				case 'R': mask |= 1;
+					break;
+				case 'P': mask |= 2;
+					break;
+				case 'S': mask |= 4;
+					break;
+			}
+			
+		}	
+		if(mask==7){
+			accept=0;
+			break;
+		}
+		else if(mask==1 || mask==3){
+			ans+="P";
+			for(int j=0;j<A;j++){
+				int N=(int)v[j].length();
+				char ch=v[j][i%N];
+				if(ch=='R')
+					defeat[j]=1;
+			}
+		}else if(mask==2 || mask==6){
+			ans+="S";
+			for(int j=0;j<A;j++){
+				int N=(int)v[j].length();
+				char ch=v[j][i%N];
+				if(ch=='P')
+					defeat[j]=1;
+			}
+		}else if(mask==4 || mask==5){
+			ans+="R";
+			for(int j=0;j<A;j++){
+				int N=(int)v[j].length();
+				char ch=v[j][i%N];
+				if(ch=='S')
+					defeat[j]=1;
+			}
+		}else
+			return true;
+	}
+	
+	return accept;
+}
+
+int main(){
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T,A;
+	cin>>T;
+	for(int t=1;t<=T;t++){
+		cin>>A;
+		cout<<"Case #"<<t<<": "<<(solve(A)?ans:"IMPOSSIBLE")<<"\n";
+	}
+	
+	return 0;	
+}
