@@ -1,0 +1,95 @@
+// Problem: Problem 1. Timeline
+// Contest: USACO - USACO 2020 February Contest, Gold
+// URL: http://www.usaco.org/index.php?page=viewproblem2&cpid=1017
+// Memory Limit: 256 MB
+// Time Limit: 4000 ms
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#pragma GCC target ("avx2")
+#pragma GCC optimization ("O3")
+#pragma GCC optimization ("unroll-loops")
+
+using l = long;
+using ll = long long;
+using ld = long double;
+using db = double;
+using str = string;
+
+using pi = pair<int,int>;
+using pl = pair<ll,ll>;
+using pd = pair<db,db>;
+
+using vi = vector<int>;
+using vl = vector<long>;
+using vll = vector<ll>;
+
+#define mp make_pair
+#define f first
+#define s second
+
+#define sz(x) (int)(x).size()
+#define all(x) begin(x), end(x)
+#define rsz resize
+#define ins insert
+#define ft front()
+#define bk back()
+#define pf push_front
+#define pb push_back
+#define modinv(a,m) modEx(a,m-2,m)
+#define moddiv(a,b,m) (a*modinv(b,m))%m
+const ll mod=1e9+7;
+
+const int MAXN=1e5+5;
+vector<pair<long,long>> adj[MAXN];
+vector<pair<long,long>> back[MAXN];
+int in_degree[MAXN];
+long fDay[MAXN];
+long ans[MAXN];
+int N,M,C,a,b,w;
+
+int main(){
+	ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	freopen("timeline.in","r",stdin);
+	freopen("timeline.out","w",stdout);
+	
+	cin>>N>>M>>C;
+	for(int i=1;i<=N;i++)
+		cin>>fDay[i];
+		
+	for(int i=0;i<C;i++){
+		cin>>a>>b>>w;
+		adj[a].push_back({b,w});
+		back[b].push_back({a,w});
+		in_degree[b]++;
+	}
+	
+	queue<int> Q;
+	for(int i=1;i<=N;i++)
+		if(in_degree[i]==0){
+			Q.push(i);
+			ans[i]=fDay[i];
+		}
+	
+	while(!Q.empty()){
+		int u=Q.front();
+		Q.pop();
+		
+		for(pair<long,long> p:adj[u]){
+			in_degree[p.f]--;
+			if(in_degree[p.f]==0)
+				Q.push(p.f);
+		}
+		
+		for(pair<long,long> p:back[u]){
+			ans[u]=max({fDay[u],ans[u],ans[p.f]+p.s});
+		}
+	}
+	
+	for(int i=1;i<=N;i++)
+		cout<<ans[i]<<"\n";
+	return 0;	
+}
