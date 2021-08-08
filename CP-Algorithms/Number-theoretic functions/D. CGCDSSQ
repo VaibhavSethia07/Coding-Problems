@@ -1,0 +1,82 @@
+// Problem: D. CGCDSSQ
+// Contest: Codeforces - Bayan 2015 Contest Warm Up
+// URL: https://codeforces.com/contest/475/problem/D
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#pragma GCC target ("avx2")
+#pragma GCC optimization ("O3")
+#pragma GCC optimization ("unroll-loops")
+
+using ll = long long;
+const int MAXN = 1e5 + 5;
+
+int arr[MAXN];
+int st[MAXN][20];
+int lg[MAXN];
+int N, Q, x;
+map<int, ll> cache;
+
+void create() {
+	lg[1] = 0;
+	for (int i = 2; i < MAXN; i++)
+		lg[i] = lg[i / 2] + 1;
+
+	for (int i = 0; i < MAXN; i++)
+		st[i][0] = arr[i];
+
+	for (int j = 1; j < 20; j++)
+		for (int i = 0; i + (1 << (j - 1)) < MAXN; i++)
+			st[i][j] = __gcd(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
+}
+
+int query(int l, int r) {
+	int L = lg[r - l + 1];
+	return __gcd(st[l][L], st[r - (1 << L) + 1][L]);
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> N;
+
+	for (int i = 0; i < N; i++)
+		cin >> arr[i];
+
+	create();
+	for (int i = 0; i < N; i++) {
+		int l = i;
+		while (l < N) {
+			int gcd = query(i, l);
+
+			int start = l, end = N - 1, ans = l;
+			while (start <= end) {
+				int mid = start + (end - start) / 2;
+				if (query(i, mid) == gcd) {
+					ans = max(ans, mid);
+					start = mid + 1;
+				} else {
+					end = mid - 1;
+				}
+			}
+
+			cache[gcd] += 1ll * (ans - l + 1);
+			l = ans + 1;
+		}
+	}
+
+	cin >> Q;
+	for (int i = 0; i < Q; i++) {
+		cin >> x;
+		if (cache.count(x) == 0)
+			cout << 0 << "\n";
+		else
+			cout << cache[x] << "\n";
+	}
+
+	return 0;
+}
