@@ -1,6 +1,6 @@
-/*Problem: Maximum Prefix
-You are given N strings consisting of small letter English alphabets. 2 strings are considered to have the same prefix if the first 2 (or more) characters of both the
-strings match.
+/*Problem:
+You are given N strings consisting of small letter English alphabets.2 strings are considered to have the same prefix if the first 2 (or more)
+characters of both the strings match.
 
 Your are allowed to do the following operation on a string at two most twice:
 	Remove the last character of the string and concatenate it to the front.
@@ -17,7 +17,9 @@ N=4
 M=3
 S=["ackerh","hack","hackearth","earth"]
 
-Approach: 3 strings can have the preix 'ha' by applying the given operation 1 time on 1st string. Therefore the answer is 3.
+Approach: 3 strings can have the preix 'ha' by applying the
+given operation 1 time on 1st string
+Therefore the answer is 3
 
 Constraints:
 1<=T<=10
@@ -168,7 +170,7 @@ void solve(vector<string>& v, int N, int M) {
 		int L = arr.size();
 
 		if (arr[0].second == 0) {
-			bool ok = 0;
+			int cnt = 0;
 			while (j < L && arr[j].second < 1) {
 				j++;
 			}
@@ -176,14 +178,19 @@ void solve(vector<string>& v, int N, int M) {
 				if (store.count(arr[j].first)) {
 					;
 				} else {
-					ok = 1;
+					cnt++;
 					M--;
 					store.insert(arr[j].first);
 				}
 				j++;
 			}
-			if (ok)
-				store.insert(arr[0].first);
+			if (cnt) {
+				if (cnt == 1 && store.count(arr[0].first)) {
+					store.erase(store.find(arr[0].first));
+				} else {
+					store.insert(arr[0].first);
+				}
+			}
 		} else if (arr[0].second == 1 && M >= 2) {
 			int cnt = 0;
 			while (j < L && arr[j].second < 1) {
@@ -217,25 +224,30 @@ void solve(vector<string>& v, int N, int M) {
 		int L = arr.size();
 
 		if (arr[0].second == 0) {
-			bool ok = 0;
-			while (j < L && arr[j].second < 2) {
+			int cnt = 0;
+			while (j < L && arr[j].second < 1) {
 				j++;
 			}
 			while (j < L && arr[j].second == 2 && M >= 2) {
 				if (store.count(arr[j].first)) {
 					;
 				} else {
-					ok = 1;
+					cnt++;
 					M -= 2;
 					store.insert(arr[j].first);
 				}
 				j++;
 			}
-			if (ok)
-				store.insert(arr[0].first);
+			if (cnt) {
+				if (cnt == 1 && store.count(arr[0].first)) {
+					store.erase(store.find(arr[0].first));
+				} else {
+					store.insert(arr[0].first);
+				}
+			}
 		} else if (arr[0].second == 1 && M >= 3) {
 			int cnt = 0;
-			while (j < L && arr[j].second < 1) {
+			while (j < L && arr[j].second < 2) {
 				j++;
 			}
 			while (j < L && arr[j].second == 2 && M >= 2) {
