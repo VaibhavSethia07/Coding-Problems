@@ -29,6 +29,7 @@ Output
 #############################################################################Solution##############################################################################################
 */
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.io.*;
 
@@ -78,7 +79,7 @@ class Solution{
 	}
 	
 	void shuffleInt(int[] a) {
-        Random random = new Random();
+        Random random = new SecureRandom();
         for (int i = a.length - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
             int swap = a[j];
@@ -88,7 +89,7 @@ class Solution{
     }
 
     void shuffleLong(long[] a) {
-        Random random = new Random();
+        Random random = new SecureRandom();
         for (int i = a.length - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
             long swap = a[j];
