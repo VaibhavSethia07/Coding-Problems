@@ -40,6 +40,7 @@ NO
 ###########################################################Solution#####################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.BufferedWriter;
@@ -51,15 +52,15 @@ class TestClass {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String []input = br.readLine().split(" ");
+        String []input = BoundedLineReader.readLine(br, 5_000_000).split(" ");
         int N = Integer.parseInt(input[0]);
         int Q = Integer.parseInt(input[1]);
         
-        int arr[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int arr[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
         int queries[] = new int[Q];
         Arrays.sort(arr);
         for(int i=0;i<Q;i++)
-            queries[i] = Integer.parseInt(br.readLine());
+            queries[i] = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
         for(int i=0;i<Q;i++)   
             bw.write(isPresent(arr,queries[i])+"\n");
         bw.flush();

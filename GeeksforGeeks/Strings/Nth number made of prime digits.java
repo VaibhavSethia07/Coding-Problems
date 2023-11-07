@@ -30,6 +30,7 @@ Testcase 2: 21st number in the sequence of numbers whose each digit is prime is 
 ############################################################Solution####################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -39,7 +40,7 @@ class GFG {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		String count[] = new String[100];
 		count[0] = "2";
 		count[1] = "3";
@@ -47,7 +48,7 @@ class GFG {
 		count[3] = "7";
 		generatePrimeDigits(count);
 		while(T-->0){
-		    int N = Integer.parseInt(br.readLine());
+		    int N = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		    bw.write(count[N-1]+"\n");
 		    bw.flush();
 		}

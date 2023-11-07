@@ -33,6 +33,7 @@ Testcase 2: There are 4 subarrays present whose sum is zero. The starting and en
 ################################################################Solution################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -42,10 +43,10 @@ class GFG {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		while(T-->0){
-		    int N = Integer.parseInt(br.readLine());
-		    int arr[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int N = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
+		    int arr[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 		    bw.write(""+zeroSumSubarrays(arr,N)+"\n");
 		    bw.flush();
 		}

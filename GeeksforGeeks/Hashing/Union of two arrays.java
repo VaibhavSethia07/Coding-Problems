@@ -34,6 +34,7 @@ Testcase 2: 1 , 2 , 6 , 25 , 32 , 54 and 85 are the elements which comes in the 
 ################################################################Solution################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -44,14 +45,14 @@ class GFG {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		while(T-->0){
-		    String ip[] = br.readLine().split(" ");
+		    String ip[] = BoundedLineReader.readLine(br, 5_000_000).split(" ");
 		    int N = Integer.parseInt(ip[0]);
 		    int M = Integer.parseInt(ip[1]);
 		    
-		    int arr1[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-		    int arr2[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int arr1[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int arr2[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 		    
 		    HashSet<Integer> hs = new HashSet<>();
 		    for(int i=0;i<N;i++)

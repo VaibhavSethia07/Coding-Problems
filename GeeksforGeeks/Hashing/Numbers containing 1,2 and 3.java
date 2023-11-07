@@ -34,6 +34,7 @@ Testcase 3: 12 , 13 and111 are the three elements in the array which contains di
 ##############################################################Solution##################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -43,10 +44,10 @@ class GFG {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		while(T-->0){
-		    int N = Integer.parseInt(br.readLine());
-		    int arr[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int N = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
+		    int arr[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 		    numbersContaining123(arr,N);
 		    
 		}
