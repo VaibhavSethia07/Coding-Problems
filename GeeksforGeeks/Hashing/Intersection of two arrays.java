@@ -45,6 +45,7 @@ Testcase 4: 10 is the only element which is in the intersection of two arrays.
 ############################################################Solution####################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -54,13 +55,13 @@ class GFG {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		while(T-->0){
-		    String[] ip = br.readLine().split(" ");
+		    String[] ip = BoundedLineReader.readLine(br, 5_000_000).split(" ");
 		    int N = Integer.parseInt(ip[0]);
 		    int M = Integer.parseInt(ip[1]);
-		    int []arr1 = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-		    int []arr2 = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int []arr1 = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int []arr2 = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 		    bw.write(""+intersection(arr1,N,arr2,M)+"\n");
 		    bw.flush();
 		}

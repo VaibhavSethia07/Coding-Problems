@@ -32,6 +32,7 @@ Testcase 2: After sorting the resulted output is 2 2 6 6 4 5 7 8.
 */
 
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -40,14 +41,14 @@ class GFG {
 	public static void main (String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		while(T-->0){
-		    String ip[] = br.readLine().split(" ");
+		    String ip[] = BoundedLineReader.readLine(br, 5_000_000).split(" ");
 		    int N = Integer.parseInt(ip[0]);
 		    int M = Integer.parseInt(ip[1]);
 		    
-		    int arr1[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-		    int arr2[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int arr1[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
+		    int arr2[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 		    relativeSorting(arr1,N,arr2,M);
 		}
 	}

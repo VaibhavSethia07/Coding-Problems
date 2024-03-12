@@ -30,6 +30,7 @@ Testcase 2: In the given array, 5 is occuring two times.So the output is 5 2.
 ###############################################################Solution##################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -37,11 +38,11 @@ import java.io.*;
 class GFG {
 	public static void main (String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int T = Integer.parseInt(br.readLine().trim());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000).trim());
 		
 		while(T-->0){
-		    int n = Integer.parseInt(br.readLine().trim());
-		    int arr[] = Arrays.stream(br.readLine().split("\\s+")).mapToInt(Integer::parseInt).toArray();
+		    int n = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000).trim());
+		    int arr[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split("\\s+")).mapToInt(Integer::parseInt).toArray();
 		    
 		    findFreq(arr,0,n-1,n);
 		}

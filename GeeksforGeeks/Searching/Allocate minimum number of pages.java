@@ -47,6 +47,7 @@ So, the output will be 32.
 ###################################################################Solution#############################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -54,11 +55,11 @@ import java.io.*;
 class GFG {
 	public static void main (String[] args) throws IOException{
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    int T = Integer.parseInt(br.readLine());
+	    int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 	    while(T-->0){
-	        int N = Integer.parseInt(br.readLine());
-	        int books[] = Arrays.stream(br.readLine().split("\\s+")).mapToInt(Integer::parseInt).toArray();
-	        int M = Integer.parseInt(br.readLine());
+	        int N = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
+	        int books[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split("\\s+")).mapToInt(Integer::parseInt).toArray();
+	        int M = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 	        StringBuffer sb = new StringBuffer();
 	        sb.append(allocation(N,books,M));
 	        System.out.println(sb);

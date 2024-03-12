@@ -33,6 +33,7 @@ Testcase 2: In geeksquiz, decimal representation for g is 4, e is 3, k is 5, s i
 ############################################################Solution####################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -62,9 +63,9 @@ class GFG {
 		        ascii[i] = 9;
 		}
 		
-	    int T = Integer.parseInt(br.readLine());
+	    int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 	    while(T-->0){
-	        String str = br.readLine();
+	        String str = BoundedLineReader.readLine(br, 5_000_000);
 	        bw.write(keypadTyping(str,ascii)+"\n");
 	        bw.flush();
 	    }

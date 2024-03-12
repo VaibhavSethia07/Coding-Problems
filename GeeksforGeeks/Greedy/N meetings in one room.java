@@ -35,6 +35,7 @@ Testcase 1: Four meetings can held with given start and end timings.
 ###############################################################################Solution##########################################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -43,11 +44,11 @@ class GFG {
 	public static void main (String[] args) throws Exception{
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    
-	    int T = Integer.parseInt(br.readLine());
+	    int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 	    while(T-->0){
-	        int N = Integer.parseInt(br.readLine());
-	        int startArr[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-	        int finishArr[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+	        int N = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
+	        int startArr[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
+	        int finishArr[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 	        
 	        Meeting meetings[] = new Meeting[N];
 	        for(int i=0;i<N;i++)
