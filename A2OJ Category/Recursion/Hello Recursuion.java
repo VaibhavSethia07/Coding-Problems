@@ -23,6 +23,7 @@ Case 2: 124
 #################################################################Solution##################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.io.*;
 
@@ -33,10 +34,10 @@ class HelloRecursion {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		int t=1;
 		while(t<=T) {
-			int input[] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+			int input[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToInt(Integer::parseInt).toArray();
 			int N = input[0];
 			bw.write("Case "+t+": "+summation(input, N)+"\n");
 			t++;

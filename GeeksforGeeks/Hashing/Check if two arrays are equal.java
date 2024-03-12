@@ -38,6 +38,7 @@ Output : 0
 #############################################################Solution###################################################################
 */
 
+import io.github.pixee.security.BoundedLineReader;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -47,11 +48,11 @@ class GFG {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(BoundedLineReader.readLine(br, 5_000_000));
 		while(T-->0){
-		    long N = Long.parseLong(br.readLine());
-		    long arr1[] = Arrays.stream(br.readLine().split(" ")).mapToLong(Long::parseLong).toArray();
-		    long arr2[] = Arrays.stream(br.readLine().split(" ")).mapToLong(Long::parseLong).toArray();
+		    long N = Long.parseLong(BoundedLineReader.readLine(br, 5_000_000));
+		    long arr1[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToLong(Long::parseLong).toArray();
+		    long arr2[] = Arrays.stream(BoundedLineReader.readLine(br, 5_000_000).split(" ")).mapToLong(Long::parseLong).toArray();
 		    
 		    bw.write(isEqual(arr1,arr2,N)+"\n");
 		    bw.flush();
